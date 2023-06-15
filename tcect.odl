@@ -1,0 +1,579 @@
+// typelib filename: TCECT.tlb
+
+[
+  uuid(AA39C1A9-0F68-46E4-B077-4CB2F5C9D3BE),
+  version(1.0),
+  helpstring("TCE Common Types")
+]
+library TCECT
+{
+    importlib("stdole2.tlb");
+    importlib("TCELIB.tlb");
+
+[
+  odl,
+  uuid(A4C46780-E85A-4D6F-A066-2F290829EA63),
+  helpcontext(0x000f7886),
+  hidden,
+  dual,
+  oleautomation
+]
+interface _Collection : IDispatch {
+    [id(00000000), helpcontext(0x000f7903)]
+    HRESULT Item(
+                    [in] VARIANT* Index, 
+                    [out, retval] VARIANT* pvarRet);
+    [id(0x00000001), helpcontext(0x000f7901)]
+    HRESULT Add(
+                    [in] VARIANT* Item, 
+                    [in, optional] VARIANT* Key, 
+                    [in, optional] VARIANT* Before, 
+                    [in, optional] VARIANT* After);
+    [id(0x00000002), helpcontext(0x000f7902)]
+    HRESULT Count([out, retval] long* pi4);
+    [id(0x00000003), helpcontext(0x000f7904)]
+    HRESULT Remove([in] VARIANT* Index);
+    [id(0xfffffffc)]
+    HRESULT _NewEnum([out, retval] IUnknown** ppunk);
+};
+
+typedef [uuid(3A46989E-7BB2-4783-907C-21B0F635DF2F)] struct UUID {
+    long Data1;
+    long Data2;
+    long Data3;
+    long Data4;
+} UUID;
+
+    [dllname("<no entry points>")]
+    module Constants {
+      const short VVariant        = 4;
+      const short VAX             = 5;
+      const short VI4             = 6;
+      const short VDouble         = 7;
+      const short VString         = 8;
+      const short VPicture        = 9;
+      const short VRTF            = 10;
+      const short VTCEObPtr       = 11;
+      const short VFormular       = 12;
+      const short VBoolean        = 13;
+      const short VCurrency       = 14;
+      const short VClass          = 15;
+      const short VFont           = 16;
+      const short VNoValue        = 17;
+      const short VReferenz       = 18;
+      const short VDate           = 19;
+      const short VControl        = 20;
+      const short VControls       = 21;
+      const short VSingle         = 22;
+      const short VDataDictionary = 23;
+      const short VPicture3D      = 24;
+      const short VTCEObject      = 25;
+      const short VTCERefObject   = 26;
+      const short VConnection     = 28;
+      const short VRefArray       = 29;
+      const short VMethode        = 30;
+      const short VProxy          = 31;
+      const short VInterval       = 33;
+      const short VMatrix         = 34;
+      const short VPDF            = 35;
+      const short VTCEObjectUnS   = 38;
+      const short VFuzzy          = 196;
+      const short VDEC            = 44;
+      const short VUI1            = 53;
+      const short VI1             = 45;
+      const short VI2             = 40;
+      const short VUI2            = 46;
+      const short VUI4            = 47;
+      const short VI8             = 48;
+      const short VUI8            = 49;
+      const short VCY             = 52;
+      const short VRecord         = 54;
+      const short VEnum           = 55;
+	//Offsets vom tValue
+      const short V_OFF_VALUETYPE = 0;
+      const short V_OFF_FLAGS = 2;
+      const short V_OFF_EVALUATIONERROR = 4;
+      const short V_OFF_ASSIGNCHECKINDEX = 8;
+      const short V_OFF_VALID = 12;
+      const short V_OFF_RESERVED = 14;
+      const short V_OFF_OBINDEX = 16;
+      const short V_OFF_VARLISTINDEX = 20;
+      const short V_OFF_VARPTR = 24;
+      const short V_OFF_DIMS = 28;
+      const short V_OFF_INDEXES = 32;
+      const short V_OFF_LASTCHANGED = 36;
+      const short V_OFF_TRDIMS = 40;
+      const short V_OFF_TRINDEXES = 44;
+      const short V_OFF_VALUE = 48;
+      const short V_OFF_VALUEPTR1 = 56;
+      const short V_OFF_VALUEPTR2 = 60;
+      const short V_OFF_ALTERNATIVES = 64;
+      const short V_OFF_DESCADDR = 68;
+	//Länge vom tValue      
+      const short V_SIZE = 72;
+    };
+
+/*
+[
+    odl,
+    uuid(00000000-0000-0000-C000-000000000046),
+]
+interface IUnknown{
+
+    LONG QueryInterface(
+        [in, out] UUID *riid,
+        [in, out] void *ppvObject);
+
+    LONG AddRef();
+    LONG Release();
+}
+*/
+
+typedef [uuid(E8A1FC94-1898-4fe0-9B33-D4CD8A8B8420), version(1.0)]
+struct tagIndex {
+    LONG dims;
+    SAFEARRAY(LONG) Indexes;
+} tIndex;
+
+typedef [uuid(58B2B7C4-AEA8-4d7e-87AF-ABDBFA954066), version(1.0)]
+struct tagDebugIndex {
+    long VarListIndex;
+    long dims;
+    SAFEARRAY(long) Indexes;
+} tDebugIndex;
+
+
+typedef [uuid(FD68C55A-A933-4c4a-BD26-A1967ABA6F8F), version(1.0)] struct VerbListEntry {
+    BSTR Key;
+    BSTR Description;
+} VerbListEntry;
+
+[
+  odl,
+  uuid(2EACD14A-E5B4-4236-A9FC-DEFB01464977),
+  version(1.0),
+  dual,
+  nonextensible,
+  oleautomation
+]
+interface IDesignObject : IDispatch {
+    [id(0xfffff447)] HRESULT Activate([in] BSTR pGUID);
+    [id(0xfffff446)] HRESULT AddControl([in] BSTR ProgID, [in] float PosX, [in] float PosY, [in] float Width, [in] float Height, [out, retval] long* ret);
+    [id(0xfffff445)] HRESULT FormularSize([in, out] float* Width, [in, out] float* Height);
+    [id(0x60030001)] HRESULT GetParameter([in] VARIANT ParamType, [out, retval] VARIANT* ret);
+    [id(0xfffff444)] HRESULT MouseDown([in, out] short* Button, [in, out] short* Shift, [in, out] float* X, [in, out] float* Y);
+    [id(0xfffff441)] HRESULT Move([in] float Left, [in] float Top, [in] float Width, [in] float Height);
+    [id(0x68030000), propget] HRESULT Name([out, retval] BSTR* RHS);
+    [id(0xfffff440), propget] HRESULT NoFormDesigner([out, retval] boolean* RHS);
+    [id(0xfffff43f), propget] HRESULT ParentName([out, retval] BSTR* RHS);
+    [id(0xfffff443)] HRESULT MouseMove([in, out] short* Button, [in, out] short* Shift, [in, out] float* X, [in, out] float* Y);
+    [id(0xfffff442)] HRESULT MouseUp([in, out] float* Button, [in, out] float* Shift, [in, out] float* X, [in, out] float* Y);
+    [id(0xfffff43e)] HRESULT Save();
+    [id(0xfffff43c)] HRESULT SetExtendedAttributes([in] long NewAttributes);
+    [id(0x60030002)] HRESULT SetParameter([in] VARIANT ParamType, [in, out] VARIANT* ParamValue);
+};
+
+[
+  odl,
+  uuid(4C410B09-B6A7-4754-9BC0-88214F4BE7AC),
+  version(1.0),
+  dual,
+  nonextensible,
+  oleautomation
+]
+interface IDesigner : IDispatch {
+    [id(0x60030001)] HRESULT AfterCreate();
+    [id(0x60030002)] HRESULT DoVerb([in] BSTR Key, [out, retval] long* Ret);
+    [id(0x60030003)] HRESULT GetVerbList([in] BSTR LanguageID, [in, out] SAFEARRAY(VerbListEntry)* VerbList, [out, retval] long* Ret);
+    [id(0x60030004)] HRESULT ImportantMembers([out, retval] _Collection** ret);
+    [id(0x60030005)] HRESULT ForbiddenBaseElements([out, retval] VARIANT* ret);
+    [id(0x68030000), propget] HRESULT DefinitionProperties([out, retval] long* ret);
+    [id(0x60030006)] HRESULT SetDesignMode([in, out] IDesignObject** DesignMaster, [out, retval] boolean* ret);
+    [id(0x60030007)] HRESULT SetContainerControl([in, out] IDispatch** Container);
+    [id(0x60030008)] HRESULT DefinitionRefresh([in, out] IDispatch** F, [in, out] IDispatch** ChildList);
+};
+
+
+[
+  odl,
+  uuid(E8D849AF-5376-488b-A6D9-8CA66A07ACED),
+  version(1.0),
+  dual,
+  nonextensible,
+  oleautomation
+]
+interface Value : IDispatch {
+    [id(0x60030001)]
+    HRESULT GetInterface([out, retval] IDispatch** pDispInterface);
+    [id(0x60030002)]
+    HRESULT GetInterfacePtr([out, retval] long* pInterface);
+    [id(0x60030003)]
+    HRESULT VariantPtr([out, retval] long* pVar);
+    [id(0x68030000), propput]
+    HRESULT VArrIndex([in] long pTV);
+    [id(0x68030000), propget]
+    HRESULT VArrIndex([out, retval] long* pTV);
+    [id(00000000), propget]
+    HRESULT VarValue([out, retval] VARIANT* Var);
+    [id(0x60030004)]
+    HRESULT SetIndependent();
+};
+
+typedef enum tagenumValid {
+    enValid = 0,
+    enValidWarning = 1,
+    enInvalid = 2
+} enumValid;
+
+typedef enum tagItemListTypes {
+    UsedQualities = 0,
+    UsedValidQualities = 1,
+    PickList = 2
+} ItemListTypes;
+
+typedef enum tagIV_FLAGS {
+	IV_HasDefault = 1, IV_Changed = 2, IV_Restricted = 4
+} IV_FLAGS;
+
+[odl,uuid(F7C2236F-73AF-4ee0-9921-CC91C3EE6DD3),version(1.0),dual,nonextensible] interface IV : IDispatch {
+    [id(0x60030002)] HRESULT SetVS([in] long pVar, [in] long pVSet,[out, retval] long* ret);
+    [id(0x60030006)] HRESULT SetVA([in] long pVar, [in] long pVSet,[in] long dims, [in,out] SAFEARRAY(long)* indexes, [out, retval] long* ret);
+    [id(0x60030003)] HRESULT GetV([in] long pVar, [out, retval] long* pV);
+    [id(0x60030005)] HRESULT GetVDispatch([out, retval] long* pVGet);
+    [id(0x60030004), propget] HRESULT Flags([out, retval] IV_FLAGS* pFlags);
+    [id(0x60030004), propput] HRESULT Flags([in] IV_FLAGS pFlags);
+    [id(0x60030007)] HRESULT GetDebugV([out, retval] BSTR* pValue);
+    [id(0x60030008)] HRESULT SetVar([in] long pVar);
+    [id(0x60030009)] HRESULT GetValue([in] long pVar, [out, retval] Value** pValue);
+};
+
+
+    [odl,uuid(E0C3F333-B785-47db-8BC9-B4E24EF274B3),version(1.0),dual,nonextensible]
+    interface IValue : IDispatch {
+    [id(0x60030002)]
+    HRESULT GetInterfacePtr([in] short VType, [out, retval] long* RHS);
+    [id(0x60030003)]
+    HRESULT VariantPtr([out, retval] long* RHS);
+    [id(0x68030000), propput]
+    HRESULT ValuePtr([in] long RHS);
+    [id(0x68030000), propget]
+    HRESULT ValuePtr([out, retval] long* RHS);
+    [id(00000000), propget]
+    HRESULT Value([out, retval] VARIANT* RHS);
+    };
+
+    [odl,uuid(B914A006-02AE-40b8-8D3B-3A7C4EC0B47E),version(1.0),dual,nonextensible,oleautomation]
+    interface IValueI4 : IDispatch {
+    [id(0x68030010), propget, helpstring("@20009"), helpcontext(0x00004e29)]
+    HRESULT Name([out, retval] BSTR* RHS);
+    //[id(0x6803000f), propget, helpstring("@20019"), helpcontext(0x00004e33)] HRESULT DifferingText([in, optional] VARIANT Value, [out, retval] _ValueString** RHS);
+    [id(0x6803000e), propget, helpstring("@15308"), helpcontext(0x00003bcc)]
+    HRESULT FormatString(
+                    [in, out] BSTR* LanguageID, 
+                    [out, retval] BSTR* RHS);
+    [id(0x6803000d), propget, helpstring("@15309"), helpcontext(0x00003bcd)]
+    HRESULT HighWord([out, retval] long* RHS);
+    [id(0x6803000c), propget, helpstring("@20017"), helpcontext(0x00004e31)]
+    HRESULT IsVisible([out, retval] boolean* RHS);
+    [id(0x6803000b), propget, helpstring("@20016"), helpcontext(0x00004e30)]
+    HRESULT IsEnabled([out, retval] boolean* RHS);
+    [id(0x6803000a), propget, helpstring("@15310"), helpcontext(0x00003bce)]
+    HRESULT LowWord([out, retval] long* RHS);
+    [id(0x60030011), helpstring("@20018"), helpcontext(0x00004e32)]
+    HRESULT SQLPrepare([out, retval] BSTR* RHS);
+    [id(0x68030009), propget, helpstring("@20008"), helpcontext(0x00004e28)]
+    HRESULT AssignRuleIndex([out, retval] long* RHS);
+    [id(0x60030012), helpstring("@20011"), helpcontext(0x00004e2b)]
+    HRESULT ValueTag(
+                    [in, optional] VARIANT Value, 
+                    [out, retval] VARIANT* RHS);
+    [id(0x60030013), helpstring("@20015"), helpcontext(0x00004e2f)]
+    HRESULT ValueTagItems(
+                    [in] VARIANT Tag, 
+                    [out, retval] SAFEARRAY(VARIANT)* RHS);
+    [id(0x60030014), helpstring("@20014"), helpcontext(0x00004e2e)]
+    HRESULT Tag([out, retval] VARIANT* RHS);
+    [id(0x68030008), propget, helpstring("@15305"), helpcontext(0x00003bc9)]
+    HRESULT Odd([out, retval] boolean* RHS);
+    [id(0x68030007), propget, helpstring("@15303"), helpcontext(0x00003bc7)]
+    HRESULT Even([out, retval] boolean* RHS);
+    [id(0x68030006), propget, helpstring("@20003"), helpcontext(0x00004e23)]
+    HRESULT UserTouched([out, retval] boolean* RHS);
+    [id(0x68030006), propput, helpstring("@20003"), helpcontext(0x00004e23)]
+    HRESULT UserTouched([in] boolean RHS);
+    //[id(0x68030005), propget, helpstring("@20000"), helpcontext(0x00004e20)] HRESULT Changed([out, retval] ValueChanged* RHS);
+    [id(0x68030004), propget, helpstring("@15301"), helpcontext(0x00003bc5)]
+    HRESULT FormattedValue(
+                    [in, defaultvalue("")] BSTR LanguageID, 
+                    [in, defaultvalue("")] BSTR OtherFormatString, 
+                    [out, retval] BSTR* RHS);
+//    [id(0x60030015), helpstring("@20002"), helpcontext(0x00004e22)] HRESULT ItemList([in] ItemListTypes ListType, [out, retval] SAFEARRAY(VARIANT)* RHS);
+//    [id(0x68030003), propget, helpstring("@20004"), helpcontext(0x00004e24)] HRESULT Valid([in, optional] VARIANT Value, [out, retval] enumValid* RHS);
+//    [id(0x68030002), propget, helpstring("@20001"), helpcontext(0x00004e21)] HRESULT Description([in, optional] BSTR LanguageID, [out, retval] _ValueString** RHS);
+    [id(0x60030016), helpstring("@15302"), helpcontext(0x00003bc6)]
+    HRESULT ClearBit([in] long Bit);
+    [id(0x60030017), helpstring("@15304"), helpcontext(0x00003bc8)]
+    HRESULT ExamineBit(
+                    [in] long Bit, 
+                    [out, retval] boolean* RHS);
+    [id(0x60030018), helpstring("@15306"), helpcontext(0x00003bca)]
+    HRESULT SetBit([in] long Bit);
+    [id(0x60030019), helpstring("@15307"), helpcontext(0x00003bcb)]
+    HRESULT ToggleBit([in] long Bit);
+    };	
+
+    [odl,uuid(05407EA3-0C9C-47EA-A0C4-221B8C41D243),version(1.0),dual,nonextensible,oleautomation]
+    interface ITCEServer : IDispatch {
+	 [id(0x60030008)] HRESULT ObjectPtr([out,retval] long* ret);
+    };
+
+
+    [odl,uuid(18AF0255-1D2A-4d7c-AB56-4581BE318D47),version(1.0),dual,nonextensible,oleautomation]
+    interface iDPI : IDispatch {
+       [id(0x60030009)] HRESULT SetDPI([in] long pDPI);
+       [id(0x6003000A)] HRESULT SetAfterDPI();
+    };
+
+    [odl,uuid(8CFCD671-E5CD-4aff-A0F3-0103468AC35D),version(1.0),dual,nonextensible,oleautomation]
+    interface TCEM : IDispatch {
+       [id(0x60030007)] HRESULT MoveTo([in] float pLeft, [in] float pTop, [in] float pWidth, [in] float pHeight);
+	 [id(0x60030008)] HRESULT QualityList([in] long ObjectIndex, [in] long VarIndex, [in] long ValueIndex, [in] BSTR Language, [in,out] VARIANT* Bag, [out,retval] long* ret);
+       [id(0x60030009)] HRESULT SetSize([in] float pWidth, [in] float pHeight);
+       [id(0x6003000A)] HRESULT SetWidth([in] float pWidth);
+       [id(0x6003000B)] HRESULT SetHeight([in] float pHeight);
+       [id(0x6003000C)] HRESULT ContextMenu([in] long pX,[in] long pY,[in] long phWnd,[in] BSTR pMenuName);
+    };
+
+    [odl,uuid(99FCA84B-5D5F-4246-8531-EFCA3602CEEB),version(1.0),dual,nonextensible,oleautomation,helpstring("Interface for objects created by TCEGDIP.UniPicture")]
+    interface ITCEPicture : IDispatch {
+       [id(0x6803000c), propput] HRESULT Source([in] BSTR RHS);
+       [id(0x6803000c), propget] HRESULT Source([out, retval] BSTR* RHS);
+       [id(0x6803000b), propput] HRESULT SourceType([in] short  RHS);
+       [id(0x6803000b), propget] HRESULT SourceType([out, retval] short* RHS);
+       [id(0x6003000d)] HRESULT DebugWindow();
+       [id(0x6803000a), propput] HRESULT DotsPerNaturalInch([in] float RHS);
+       [id(0x6803000a), propget] HRESULT DotsPerNaturalInch([out, retval] float* RHS);
+       [id(0x68030009), propget] HRESULT AdditionalData([out, retval] BSTR* RHS);
+       [id(0x68030009), propput] HRESULT AdditionalData([in] BSTR RHS);
+       [id(0x6003000e)] HRESULT AddRectMarker([in] BSTR Name, [in] float X, [in] float Y, [in] float W, [in] float H, [out, retval] long* RHS);
+       [id(0x6003000f)] HRESULT AddRegionMarker([in] BSTR Name, [in, out] IDispatch** Region, [out, retval] long* RHS);
+       [id(0x60030010)] HRESULT AddPathMarker([in] BSTR Name, [in, out] IDispatch** path, [out, retval] long* RHS);
+       [id(0x60030011)] HRESULT AddImageMarker([in] BSTR Name, [in, out] IDispatch** Img, [in] float X, [in] float Y, [in, defaultvalue(0)] float Width, [in, defaultvalue(0)] float Height, [out, retval] long* RHS);
+       [id(0x68030008), propput] HRESULT Changed([in, out] boolean* RHS);
+       [id(0x68030008), propget] HRESULT Changed([out, retval] boolean* RHS);
+       [id(0x60030012)] HRESULT Clear();
+       [id(0x60030013)] HRESULT ClearMarkers();
+       [id(0x60030014)] HRESULT Copy([out, retval] IDispatch** RHS);
+       [id(0x68030007), propputref] HRESULT GDIPImage([in, out] IDispatch** RHS);
+       [id(0x68030007), propget] HRESULT GDIPImage([out, retval] IDispatch** RHS);
+       [id(00000000), propget] HRESULT Handle([out, retval] long* RHS);
+       [id(0x68030006), propget] HRESULT Height([out, retval] long* RHS);
+       [id(0x68030005), propget] HRESULT Data([out, retval] SAFEARRAY(unsigned char)* RHS);
+       [id(0x68030005), propput] HRESULT Data([in, out] SAFEARRAY(unsigned char)* RHS);
+       [id(0x60030015)] HRESULT LoadFromFile([in] BSTR FileName, [out, retval] long* RHS);
+       [id(0x60030016)] HRESULT LoadStream([in, out] SAFEARRAY(unsigned char)* ba, [out, retval] long* RHS);
+       [id(0x60030017)] HRESULT LoadStreamClipboard([in, out] SAFEARRAY(unsigned char)* ba, [in] long ClipFormat, [out, retval] long* RHS);
+       [id(0x68030004), propget] HRESULT Marker([out, retval] IDispatch** RHS);
+       [id(0x60030018)] HRESULT Object([out, retval] IDispatch** RHS);
+       [id(0x68030003), propputref] HRESULT Picture([in, out] IDispatch** RHS);
+       [id(0x68030003), propget] HRESULT Picture([out, retval] IDispatch** RHS);
+       [id(0x68030002), propget] HRESULT Icon([out, retval] IDispatch** RHS);
+       [id(0x68030001), propget] HRESULT PictureType([out, retval] long* RHS);
+       [id(0x60030019)] HRESULT ReadBag([in, out] VARIANT* V);
+       [id(0x6003001a)] HRESULT RemoveMarker([in] BSTR Name, [out, retval] long* RHS);
+       [id(0x6003001b)] HRESULT Render([in, out] long* hDC, [in] float X, [in] float Y, [in, defaultvalue(0)] float WidthPixels, [in, defaultvalue(0)] float HeightPixels, [in, defaultvalue(0)] float xSrc, [in, defaultvalue(0)] float ySrc, [in, defaultvalue(0)] float cxSrc, [in, defaultvalue(0)] float cySrc, [out, retval] long* RHS);
+       [id(0x6003001c)] HRESULT RenderI([in, out] long* hDC, [in] long X, [in] long Y, [in, defaultvalue(0)] long WidthPixels, [in, defaultvalue(0)] long HeightPixels, [in, defaultvalue(0)] long xSrc, [in, defaultvalue(0)] long ySrc, [in, defaultvalue(0)] long cxSrc, [in, defaultvalue(0)] long cySrc, [out, retval] long* RHS);
+       [id(0x6003001d)] HRESULT ResizedImage([in] long NewWidth, [in, defaultvalue(-1)] long NewHeight, [in, defaultvalue(4)] long ScalePosition, [in, defaultvalue(0)] long PictureFormat, [out, retval] ITCEPicture** RHS);
+       [id(0x6003001e)] HRESULT SaveHTML([out, retval] BSTR* RHS); 
+       [id(0x68030000), propget] HRESULT Width([out, retval] long* RHS);
+       [id(0x6003001f)] HRESULT Save([out, retval] VARIANT* RHS);
+       [id(0x60030020)] HRESULT Load([in, out] VARIANT* Bag);
+       [id(0x60030021)] HRESULT SetHotSpot([in] double X, [in] double Y);
+       [id(0x60030022)] HRESULT GetHotSpot([in, out] float* X, [in, out] float* Y);
+       [id(0x60030023)] HRESULT WriteBag([out, retval] VARIANT* RHS);
+    };
+
+
+    [odl,uuid(5C95F281-4C81-4302-B0F5-BF7D831B7FF2),version(1.0),dual,nonextensible,oleautomation]
+    interface IControlDesigner : IDispatch {
+       [id(0x60030007)] HRESULT MoveByParent([in] float pLeft, [in] float pTop, [in] float pWidth, [in] float pHeight);
+    };
+
+    [odl,uuid(9AD6262C-7F81-4197-9725-81F2E54CDB4F),version(1.0),dual,nonextensible,oleautomation]
+    interface IDesign : IDispatch {
+       [id(0x60030007)] HRESULT IsAvailableProperty([in] BSTR pProperty, [out,retval] boolean* ret);
+       [id(0x60030008)] HRESULT IsAvailableSizer([in] BSTR pProperty, [out,retval] boolean* ret);
+       [id(0x60030009)] HRESULT PreferredSize([in,out] float *pWidth, [in,out] float *pHeight, [out,retval] boolean *ret);
+    };
+
+    typedef [uuid(47A82EBA-F25A-4974-9821-7F41FC35CAA8), version(1.0)]
+    struct tagtArrayDim {
+        long DimFlags;
+        long Bound[2];
+        long Flags[2];
+    } tArrayDim;
+
+    typedef [uuid(C3AB0D5E-CDC9-4343-8A84-0DA2A2A99B55), version(1.0)]
+    struct tagValue {
+        short ValueType;
+        short Flags;
+        long EvaluationError;
+        long AssignCheckIndex;
+        short Valid;
+        short Reserved;
+        long ObIndex;
+        long VarListIndex;
+        long VarPtr;
+        long dims;
+        SAFEARRAY(long) Indexes;
+        long LastChanged;
+        long TransactDims;
+        SAFEARRAY(long) TransactIndexes;
+        VARIANT Value;		        
+        IDispatch *Alternatives;
+        long DescAddr;
+    } tValue;
+
+    typedef [uuid(0538C9FD-0D70-4f33-9E32-7162D0906B9C), version(1.0)]
+    struct tagValueTransfer {
+        short VarType;
+        long VarIndex;
+        long ObIndex;
+        tIndex Index;		        
+        BSTR DialogLang;
+        SAFEARRAY(BSTR) Languages;
+        SAFEARRAY(BSTR) FormatList;
+        long Flags;
+        long EvalError;
+        short Valid;
+    } ValueTransfer;
+
+    typedef [uuid(74F79253-1568-4479-A800-74D7C99B11BD), version(1.0)]
+    struct tagFormStockEntry {
+        [helpstring("Name")] 
+        BSTR Name;
+        [helpstring("Width")]
+        float Width;
+        [helpstring("Height")] 
+        float Height;
+        [helpstring("MinWidth")] 
+        float MinWidth;
+        [helpstring("MaxWidth")] 
+        float MaxWidth;
+        [helpstring("MinHeight")] 
+        float MinHeight;
+        [helpstring("MaxHeight")] 
+        float MaxHeight;
+        [helpstring("UrWidth")] 
+        float UrWidth;
+        [helpstring("UrHeight")] 
+        float UrHeight;
+    } FormStockEntry;
+
+    typedef [uuid(D9F5D660-D577-4001-BFDE-17ADB59F8AAD), version(1.0)]
+    struct tagControlStockEntry2 {
+        [helpstring("Name")]
+        BSTR Name;
+        [helpstring("flags")]
+        long flags;
+        [helpstring("AlignLeftType")]
+        long AlignLeftType;
+        [helpstring("AlignTopType")]
+        long AlignTopType;
+        [helpstring("AlignRightType")]
+        long AlignRightType;
+        [helpstring("AlignBottomType")]
+        long AlignBottomType;
+        [helpstring("AlignLeft")]
+        long AlignLeft;
+        [helpstring("AlignTop")]
+        long AlignTop;
+        [helpstring("AlignRight")]
+        long AlignRight;
+        [helpstring("AlignBottom")]
+        long AlignBottom;
+        [helpstring("AlignElementLeft")]
+        BSTR AlignElementLeft;
+        [helpstring("AlignElementTop")]
+        BSTR AlignElementTop;
+        [helpstring("AlignElementRight")]
+        BSTR AlignElementRight;
+        [helpstring("AlignElementBottom")]
+        BSTR AlignElementBottom;
+        [helpstring("MinWidth")]
+        float MinWidth;
+        [helpstring("MinHeight")]
+        float MinHeight;
+        [helpstring("MaxWidth")]
+        float MaxWidth;
+        [helpstring("MaxHeight")]
+        float MaxHeight;
+        [helpstring("Left")]
+        float Left;
+        [helpstring("Top")]
+        float Top;
+        [helpstring("Width")]
+        float Width;
+        [helpstring("Height")]
+        float Height;
+        [helpstring("Visible")]
+        boolean Visible;
+    } ControlStockEntry2;
+
+
+[
+  odl,
+  uuid(D221461B-5542-4af7-897E-989D5B660ED0),
+  version(1.0),
+  dual,
+  nonextensible,
+  oleautomation
+]
+interface ITCEMaster : IDispatch {
+    [id(0x60030004)] HRESULT AddConstantRefresh([in, out] IDispatch** C);
+    [id(0x60030005)] HRESULT AskForControl([in] BSTR ProgID);
+    [id(0x68030003), propget] HRESULT DoubleParam([in] long Index, [out, retval] double* ret);
+    [id(0x60030006)] HRESULT GetValidationList([in] long ObIndex, [in] long VarIndex, [in] VARIANT ValueIndex,[in] long ListType, [in, out] VARIANT* Bag);
+    [id(0x68030002), propget] HRESULT LongParam([in] long Index, [out, retval] long* ret);
+    [id(0x60030007)] HRESULT MoveTo([in] float pLeft, [in] float pTop, [in] float pWidth, [in] float pHeight);
+    [id(0x60030008)] HRESULT RemoveConstantRefresh([in, out] BSTR* CGUID);
+    [id(0x60030009)] HRESULT Resize();
+    [id(0x6003000a)] HRESULT Connection([in, out] long* Protocol, [in, out] BSTR* Machine, [in, out] long* Port, [in, out] BSTR* DSN, [in, out] BSTR* WBName, [in, out] long* MajorVersion, [in, out] VARIANT* MinorVersion, [in, out] BSTR* UserID);
+    [id(0x6003000b), vararg] HRESULT RaiseAnEvent([in, out] BSTR* EventName, [in, out] SAFEARRAY(VARIANT)* params);
+    [id(0x6003000c)] HRESULT ExecuteEventRef([in] BSTR EventName, [in, out] SAFEARRAY(VARIANT)* params);
+    [id(0x6003000d)] HRESULT Feedback([in] BSTR MemberID, [in, out] VARIANT* Value, [in, out] SAFEARRAY(long)* index, [in] long ValueType, [in] BSTR AddParam);
+    [id(0x6003000e)] HRESULT FeedbackEx([in] BSTR SpecialFunction, [in] long ObIndex, [in] long VarIndex, [in, out] SAFEARRAY(long)* index, [in, out] VARIANT* Value, [in] VARIANT AddParam);
+    [id(0x6003000f)] HRESULT ValueAssign([in] long Mode, [in] long ObIndex, [in] long VarIndex, [in, out] VARIANT* Value, [out, retval] long* Res);
+    [id(0x60030010)] HRESULT FeedbackExValue([in] BSTR SpecialFunction, [in] long ObIndex, [in] long VarIndex, [in, out] SAFEARRAY(long)* index, [in, out] VARIANT* Value, [in] long VarIndex1, [in, out] SAFEARRAY(long)* index1, [in, out] VARIANT* Value1, [in] VARIANT AddParam);
+    [id(0x60030011)] HRESULT ServerExecute([in] long ActionType, [in] long P1, [in] long P2, [in] long P3, [in] long P4, [in, out] VARIANT* Bag, [out, retval] VARIANT* RHS);
+    [id(0x60030012)] HRESULT SetFocusTo([in, out] long* pTo);
+    [id(0x68030001), propget] HRESULT StringParam([in] long Index, [out, retval] BSTR* RHS);
+    [id(0x60030013)] HRESULT ValidateControls();
+    [id(0x68030000), propget] HRESULT VariantParam([in] long Index, [out, retval] VARIANT* RHS);
+    [id(0x60030014)] HRESULT ContextMenu([in] long x, [in] long y, [in] long hwndParent, [in] BSTR* MenuName, [out, retval] long* Res);
+};
+
+[
+  odl,
+  uuid(03383BC4-0F16-4eda-9F04-6B1A3F3D9F64),
+  version(1.0),
+  dual,
+  nonextensible,
+  oleautomation
+]
+interface ITCEControl : IDispatch {
+    [id(0x60030001)] HRESULT AfterRefresh();
+    [id(0x60030002)] HRESULT AmbientChanged([in] BSTR AmbientName);
+    [id(0x60030003)] HRESULT BeforeRefresh();
+    [id(0x60030004)] HRESULT Terminate();
+    [id(0x60030005)] HRESULT Validate();
+    [id(0x60030006)] HRESULT SetRuntimeMaster([in, out] ITCEMaster** Master);
+    [id(0x68030000), propget] HRESULT RuntimeProperties([out, retval] long* RHS);
+    [id(0x60030007)] HRESULT KeyValue([in] BSTR Key, [in] VARIANT Value);
+};
+
+
+
+//END OF LIB
+};
+
